@@ -13,31 +13,30 @@ SELECT * FROM users;
 CREATE TABLE rewards(
 reward_id serial PRIMARY KEY,
 reward_name TEXT,
-reward_description TEXT,
-reward_image_url TEXT
+reward_description TEXT
 );
 
-INSERT INTO rewards (reward_name, reward_description, reward_image_url)
-VALUES ('First Smile', 'You smiled at someone! Already a social butterfly!','<img src="/Assets/Badges/smiley1.jpg" alt="smiley Face">'),
-('First Hello', 'You said hello to a friend! Nice!', '<img src="/Assets/Badges/hello.png" alt="hello">'),
-('Eye Contact Initiator', 'You looked someone in the eye for the first time!', '<img src="/Assets/Badges/eye.png" alt="eye">'),
+INSERT INTO rewards (reward_name, reward_description)
+VALUES ('First Smile', 'You smiled at someone! Already a social butterfly!'),
+('First Hello', 'You said hello to a friend! Nice!'),
+('Eye Contact Initiator', 'You looked someone in the eye for the first time!'),
 
 
-('How do you do?','You asked someone how they are doing today!', '<img src="/Assets/Badges/question.jpg" alt="question mark">'),
-( 'Compliment', 'You gave a sincere compliment!', '<img src="/Assets/Badges/question.jpg" alt="question mark">'),
-('Direction Dynomite', 'You asked someone for directions! Woot!', '<img src="/Assets/Badges/direction.png" alt="direction signs">'),
+('How do you do?','You asked someone how they are doing today!'),
+( 'Compliment', 'You gave a sincere compliment!'),
+('Direction Dynomite', 'You asked someone for directions! Woot!'),
 
-('Take Five', 'You started a five minute conversation with a stranger!', '<img src="/Assets/Badges/five.png" alt="five">'),
-('Foodie Friends', 'Congrats! You invited a friend to eat out for the first time!', '<img src="/Assets/Badges/spoon-and-fork.png" alt="quoteBubbles">'),
-('Party with your Elders', 'You connected with an elderly friend!', '<img src="/Assets/Badges/old-man.png" alt="quoteBubbles">'),
+('Take Five', 'You started a five minute conversation with a stranger!'),
+('Foodie Friends', 'Congrats! You invited a friend to eat out for the first time!'),
+('Party with your Elders', 'You connected with an elderly friend!'),
 
-('Dinner Party Host', 'Wow! You hosted your first dinner party! Rock on!','<img src="/Assets/Badges/balloon.png" alt="balloon">' ),
-('Date Night','You asked someone out on a date!', '<img src="/Assets/Badges/romantic-date.png" alt="couple holding hands">'),
-('Mutual appreciation', 'You exchanged favors with a friend. Social contracts are what makes the world go round.','<img src="/Assets/Badges/fist-bump" alt="fist bump">'),
+('Dinner Party Host', 'Wow! You hosted your first dinner party! Rock on!' ),
+('Date Night','You asked someone out on a date!'),
+('Mutual appreciation', 'You exchanged favors with a friend. Social contracts are what makes the world go round.'),
 
-('Rejection Warrior', 'Congratulations! You have been successfully rejected!', '<img src="/Assets/Badges/thumbs-down.png" alt="thumbs down">' ),
-('Public Speaker', 'You spoke in front of a crowd of people! Way to go!', '<img src="/Assets/Badges/speech.png" alt="speech">'),
-('Crusher', 'You finally told your crush how you felt! Amazing!', '<img src="/Assets/Badges/in-love.png" alt="hearts for eyes smiley">');
+('Rejection Warrior', 'Congratulations! You have been successfully rejected!' ),
+('Public Speaker', 'You spoke in front of a crowd of people! Way to go!'),
+('Crusher', 'You finally told your crush how you felt! Amazing!');
 
 SELECT * FROM rewards;
 
@@ -73,10 +72,13 @@ VALUES ('Smile at someone today.', 'When you pass by an aquaintance give them a 
 
 SELECT * FROM challenges;
 
+
 CREATE TABLE completed_challenges(
 completed_challenge_id serial PRIMARY KEY,
 user_id_fk int REFERENCES users(user_id),
-challenge_id_fk int REFERENCES challenges(challenge_id)
+challenge_id_fk int REFERENCES challenges(challenge_id),
+time_stamp TIMESTAMP,
+journal_entry varchar(20000)
 
 
 );
