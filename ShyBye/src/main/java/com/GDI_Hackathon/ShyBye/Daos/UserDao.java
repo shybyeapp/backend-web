@@ -1,7 +1,5 @@
 package com.GDI_Hackathon.ShyBye.Daos;
-
 import com.GDI_Hackathon.ShyBye.Models.User;
-
 import java.util.List;
 
 public interface UserDao {

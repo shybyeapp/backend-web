@@ -21,7 +21,7 @@ public class UserController {
 
     //pull current username and points get
 
-//post method user gabby path /users
+    //post method user gabby path /users
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public void registerNewUser(@RequestBody User newUser){userDao.createUser(newUser);}
 }

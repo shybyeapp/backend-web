@@ -6,7 +6,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class JdbcChallengeDao implements ChallengeDao{
     public List<CompleteChallenge> getUserHistory(int userId) {
         List<CompleteChallenge> history = new ArrayList<>();
 
-        String sql = "SELECT completed_challenge_id, challenge_id_fk " +
+        String sql = "SELECT completed_challenge_id, challenge_id_fk, user_id_fk " +
                      "FROM completed_challenges " +
                      "WHERE user_id_fk = ?; ";
 

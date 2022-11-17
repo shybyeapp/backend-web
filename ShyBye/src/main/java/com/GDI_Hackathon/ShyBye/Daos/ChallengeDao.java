@@ -1,12 +1,10 @@
 package com.GDI_Hackathon.ShyBye.Daos;
-
 import com.GDI_Hackathon.ShyBye.Models.CompleteChallenge;
-
 import java.util.List;
 
 public interface ChallengeDao {
 
-    //submit completed challenge
+    //submit completed challengez
     void submitCompletedChallenge(CompleteChallenge completeChallenge);
 
     //list history of completed tasks
