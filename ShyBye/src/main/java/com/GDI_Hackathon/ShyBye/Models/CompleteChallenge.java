@@ -7,13 +7,19 @@ public class CompleteChallenge {
     private int id;
     private int userId;
     private int challengeId;
-    private LocalDateTime dateCompleted;
+//    private LocalDateTime dateCompleted;
 
-    public CompleteChallenge(int id, int userId, int challengeId, LocalDateTime dateCompleted) {
+//    public CompleteChallenge(int id, int userId, int challengeId, LocalDateTime dateCompleted) {
+//        this.id = id;
+//        this.userId = userId;
+//        this.challengeId = challengeId;
+//        this.dateCompleted = dateCompleted;
+//    }
+
+    public CompleteChallenge(int id, int userId, int challengeId) {
         this.id = id;
         this.userId = userId;
         this.challengeId = challengeId;
-        this.dateCompleted = dateCompleted;
     }
 
     public CompleteChallenge() {
@@ -43,13 +49,13 @@ public class CompleteChallenge {
         this.challengeId = challengeId;
     }
 
-    public LocalDateTime getDateCompleted() {
-        return dateCompleted;
-    }
+//    public LocalDateTime getDateCompleted() {
+//        return dateCompleted;
+//    }
 
-    public void setDateCompleted(LocalDateTime dateCompleted) {
-        this.dateCompleted = dateCompleted;
-    }
+//    public void setDateCompleted(LocalDateTime dateCompleted) {
+//        this.dateCompleted = dateCompleted;
+//    }
 
     @Override
     public String toString() {
@@ -57,7 +63,7 @@ public class CompleteChallenge {
                 "id=" + id +
                 ", userId=" + userId +
                 ", challengeId=" + challengeId +
-                ", dateCompleted=" + dateCompleted +
+                //", dateCompleted=" + dateCompleted +
                 '}';
     }
 }

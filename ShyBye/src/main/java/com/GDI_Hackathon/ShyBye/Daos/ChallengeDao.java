@@ -7,7 +7,7 @@ import java.util.List;
 public interface ChallengeDao {
 
     //submit completed challenge
-    CompleteChallenge submitCompletedChallenge(CompleteChallenge completeChallenge);
+    void submitCompletedChallenge(CompleteChallenge completeChallenge);
 
     //list history of completed tasks
     List<CompleteChallenge> getUserHistory(int userId);

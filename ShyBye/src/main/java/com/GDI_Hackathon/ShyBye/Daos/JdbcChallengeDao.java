@@ -15,8 +15,12 @@ public class JdbcChallengeDao implements ChallengeDao{
 
     private JdbcTemplate jdbcTemplate;
 
+    public JdbcChallengeDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
-    public CompleteChallenge submitCompletedChallenge(CompleteChallenge completeChallenge) {
+    public void submitCompletedChallenge(CompleteChallenge completeChallenge) {
         String sql = "INSERT INTO completed_challenges (user_id_fk, challenge_id_fk) " +
                      "VALUES (?,?) " +
                      "RETURNING completed_challenge_id;";
@@ -28,16 +32,14 @@ public class JdbcChallengeDao implements ChallengeDao{
         } catch (DataAccessException e) {
             System.out.println("Database access exception");
         }
-
-        return getCompletedChallengeById(completedChallengeId);
     }
 
     @Override
     public List<CompleteChallenge> getUserHistory(int userId) {
         List<CompleteChallenge> history = new ArrayList<>();
 
-        String sql = "SELECT completed_challenge_id, challenge_id " +
-                     "FROM completed_challenge " +
+        String sql = "SELECT completed_challenge_id, challenge_id_fk " +
+                     "FROM completed_challenges " +
                      "WHERE user_id_fk = ?; ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -52,8 +54,8 @@ public class JdbcChallengeDao implements ChallengeDao{
 
     @Override
     public CompleteChallenge getCompletedChallengeById(int completedChallengeId) {
-        String sql = "SELECT user_id_fk, challenge_id " +
-                     "FROM completed_challenge " +
+        String sql = "SELECT user_id_fk, challenge_id_fk " +
+                     "FROM completed_challenges " +
                      "WHERE completed_challenge_id = ?; ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, completedChallengeId);
@@ -67,10 +69,10 @@ public class JdbcChallengeDao implements ChallengeDao{
 
     private CompleteChallenge mapToCompleteChallenge(SqlRowSet rs){
         CompleteChallenge completeChallenge = new CompleteChallenge();
-        completeChallenge.setChallengeId(rs.getInt("challenge_id_fk"));
-        completeChallenge.setUserId(rs.getInt("user_id_fk"));
         completeChallenge.setId(rs.getInt("completed_challenge_id"));
-        completeChallenge.
+        completeChallenge.setUserId(rs.getInt("user_id_fk"));
+        completeChallenge.setChallengeId(rs.getInt("challenge_id_fk"));
+//        completeChallenge.setDateCompleted(rs.getDate("completionDate"));
         return completeChallenge;
     }
 }
