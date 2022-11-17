@@ -1,10 +1,12 @@
 package com.GDI_Hackathon.ShyBye.Daos;
 
-<<<<<<< Updated upstream
-public class JdbcUserDao {
-=======
+import com.GDI_Hackathon.ShyBye.Models.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcUserDao implements UserDao {
 
@@ -21,9 +23,9 @@ public class JdbcUserDao implements UserDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
             User user = mapRowToUser(results);
-            users.add(user);
+            allUsers.add(user);
         }
-        return users;
+        return allUsers;
     }
 
     @Override
@@ -37,6 +39,27 @@ public class JdbcUserDao implements UserDao {
         }
         throw new UsernameNotFoundException("User " + username + " was not found.");
     }
->>>>>>> Stashed changes
+
+    @Override
+    public void createUser(User newUser){
+        String sql = " insert into users (username, passwrd, user_points) " +
+                "values (?,?,?) RETURNING user_id; ";
+        try {
+            jdbcTemplate.queryForObject(sql, Integer.class ,newUser.getUserName(),newUser.getPassword(),newUser.getUserPoints())
+        } catch (DataAccessException e) {
+            System.out.println("Database access exception");
+        }
+
+    };
+
+
+
+    private User mapRowToUser(SqlRowSet rs){
+        User user = new User();
+        user.setUserId(rs.getInt("user_id"));
+        user.setUserName(rs.getString("username"));
+        user.setUserPoints(rs.getInt("user_points"));
+        return user;
+    }
 
 }

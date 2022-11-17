@@ -1,9 +1,10 @@
 package com.GDI_Hackathon.ShyBye.Controllers;
 
 import com.GDI_Hackathon.ShyBye.Daos.UserDao;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.GDI_Hackathon.ShyBye.Models.User;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -20,4 +21,7 @@ public class UserController {
 
     //pull current username and points get
 
+//post method user gabby path /users
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    public void registerNewUser(@RequestBody User newUser){userDao.createUser(newUser);}
 }
