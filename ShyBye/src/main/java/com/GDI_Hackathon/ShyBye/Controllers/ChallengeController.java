@@ -21,6 +21,8 @@ public class ChallengeController {
         this.userDao = userDao;
     }
 
+    //list of all challenges
+
 
     //Submit completed challenge to userId
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,13 +42,8 @@ public class ChallengeController {
         return challengeDao.getUserHistory(userId);
     }
 
-
-    @ResponseStatus(HttpStatus.FOUND)
-    @RequestMapping(path = "/users/{userId}", method = RequestMethod.GET)
-    public User getUserByUserId(@PathVariable int userId){
-        return userDao.getUserById(userId);
-    }
-
     //determine rewards
+
+
 
 }

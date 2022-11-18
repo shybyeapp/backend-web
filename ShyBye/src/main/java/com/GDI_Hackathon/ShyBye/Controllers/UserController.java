@@ -3,6 +3,7 @@ package com.GDI_Hackathon.ShyBye.Controllers;
 import com.GDI_Hackathon.ShyBye.Daos.UserDao;
 import com.GDI_Hackathon.ShyBye.Models.LoginDTO;
 import com.GDI_Hackathon.ShyBye.Models.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,13 @@ public class UserController {
     //list all users
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> findall() {return userDao.findAll();}
+
+    //get user by id
+    @ResponseStatus(HttpStatus.FOUND)
+    @RequestMapping(path = "/users/{userId}", method = RequestMethod.GET)
+    public User getUserByUserId(@PathVariable int userId){
+        return userDao.getUserById(userId);
+    }
 
     //login to app
     @RequestMapping(value = "/login", method = RequestMethod.GET)
