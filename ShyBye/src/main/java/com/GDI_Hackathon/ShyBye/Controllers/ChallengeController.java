@@ -21,26 +21,31 @@ public class ChallengeController {
         this.userDao = userDao;
     }
 
-    //submit completed challenge to database
+
+    //Submit completed challenge to userId
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/challenge", method = RequestMethod.POST)
-    public void submitCompletedChallenge(@RequestBody CompleteChallenge completeChallenge){
-        challengeDao.submitCompletedChallenge(completeChallenge);
+    @RequestMapping(path = "/users/{userId}/challenges/{challengeId}", method = RequestMethod.POST)
+    public User submitCompletedChallenge(@PathVariable int userId, @PathVariable int challengeId){
+        challengeDao.submitCompletedChallenge(userId, challengeId);
+        User user = userDao.getUserById(userId);
+        int points = challengeDao.getChallengeById(challengeId).getChallengePoints();
+        user.addToScore(points);
+        return userDao.updateUserScore(user);
     }
 
-    //pull user's completed challenge history by userId
+    //Completed Challenge History by userId
     @ResponseStatus(HttpStatus.FOUND)
     @RequestMapping(path = "/users/{userId}/challenges", method = RequestMethod.GET)
     public List<CompleteChallenge> getUserChallengeHistory(@PathVariable int userId){
         return challengeDao.getUserHistory(userId);
     }
 
+
     @ResponseStatus(HttpStatus.FOUND)
     @RequestMapping(path = "/users/{userId}", method = RequestMethod.GET)
     public User getUserByUserId(@PathVariable int userId){
         return userDao.getUserById(userId);
     }
-
 
     //determine rewards
 

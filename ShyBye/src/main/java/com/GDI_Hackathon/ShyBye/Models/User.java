@@ -51,6 +51,10 @@ public class User {
         this.userPoints = userPoints;
     }
 
+    public void addToScore(int points){
+        this.userPoints += points;
+    }
+
     @Override
     public String toString() {
         return "User{" +

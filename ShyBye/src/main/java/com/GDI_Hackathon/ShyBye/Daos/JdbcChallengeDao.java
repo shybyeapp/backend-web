@@ -1,6 +1,8 @@
 package com.GDI_Hackathon.ShyBye.Daos;
 
+import com.GDI_Hackathon.ShyBye.Exceptions.ChallengeNotFoundException;
 import com.GDI_Hackathon.ShyBye.Exceptions.CompletedChallengeNotFoundException;
+import com.GDI_Hackathon.ShyBye.Models.Challenge;
 import com.GDI_Hackathon.ShyBye.Models.CompleteChallenge;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,19 +21,30 @@ public class JdbcChallengeDao implements ChallengeDao{
     }
 
     @Override
-    public void submitCompletedChallenge(CompleteChallenge completeChallenge) {
+    public void submitCompletedChallenge(int userId, int challengeId) {
         String sql = "INSERT INTO completed_challenges (user_id_fk, challenge_id_fk) " +
                      "VALUES (?,?) " +
-                     "RETURNING completed_challenge_id;";
+                     "RETURNING completed_challenge_id; ";
 
         Integer completedChallengeId = 0;
         try {
             completedChallengeId = jdbcTemplate.queryForObject(sql, Integer.class,
-                    completeChallenge.getUserId(), completeChallenge.getChallengeId());
+                    userId, challengeId);
         } catch (DataAccessException e) {
             System.out.println("Database access exception");
         }
     }
+
+//    @Override
+//    public int currentUserScore(int userId) {
+//        String sql = "SELECT user_id_fk, sum(challenges.challenge_points) AS score " +
+//                     "FROM completed_challenges " +
+//                     "JOIN challenges on challenges.challenge_id = completed_challenges.challenge_id_fk " +
+//                     "WHERE user_id_fk = ? " +
+//                     "GROUP BY completed_challenges.user_id_fk;";
+//
+//        return 0;
+//    }
 
     @Override
     public List<CompleteChallenge> getUserHistory(int userId) {
@@ -51,6 +64,7 @@ public class JdbcChallengeDao implements ChallengeDao{
         return history;
     }
 
+
     @Override
     public CompleteChallenge getCompletedChallengeById(int completedChallengeId) {
         String sql = "SELECT user_id_fk, challenge_id_fk " +
@@ -66,6 +80,21 @@ public class JdbcChallengeDao implements ChallengeDao{
         throw new CompletedChallengeNotFoundException();
     }
 
+    @Override
+    public Challenge getChallengeById(int challengeId) {
+        String sql = "SELECT challenge_id, challenge_name, challenge_description, challenge_points, difficulty, reward_id_fk " +
+                     "FROM challenges " +
+                     "WHERE challenge_id = ?; ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, challengeId);
+
+        if(results.next()){
+            return mapRowToChallenge(results);
+        }
+
+        throw new ChallengeNotFoundException();
+    }
+
     private CompleteChallenge mapToCompleteChallenge(SqlRowSet rs){
         CompleteChallenge completeChallenge = new CompleteChallenge();
         completeChallenge.setId(rs.getInt("completed_challenge_id"));
@@ -73,5 +102,17 @@ public class JdbcChallengeDao implements ChallengeDao{
         completeChallenge.setChallengeId(rs.getInt("challenge_id_fk"));
 //        completeChallenge.setDateCompleted(rs.getDate("completionDate"));
         return completeChallenge;
+    }
+
+    private Challenge mapRowToChallenge(SqlRowSet rs){
+        Challenge challenge = new Challenge();
+        challenge.setChallengeId(rs.getInt("challenge_id"));
+        challenge.setChallengeName(rs.getString("challenge_name"));
+        challenge.setChallengeDescription(rs.getString("challenge_description"));
+        challenge.setChallengePoints(rs.getInt("challenge_points"));
+        challenge.setDifficulty(rs.getString("difficulty"));
+        challenge.setRewardId(rs.getInt("reward_id_fk"));
+
+        return challenge;
     }
 }

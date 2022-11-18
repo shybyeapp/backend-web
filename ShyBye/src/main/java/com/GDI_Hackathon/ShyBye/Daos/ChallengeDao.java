@@ -1,22 +1,22 @@
 package com.GDI_Hackathon.ShyBye.Daos;
+import com.GDI_Hackathon.ShyBye.Models.Challenge;
 import com.GDI_Hackathon.ShyBye.Models.CompleteChallenge;
 import java.util.List;
 
 public interface ChallengeDao {
 
-    //submit completed challengez
-    void submitCompletedChallenge(CompleteChallenge completeChallenge);
+    //submit completed challenge
+    void submitCompletedChallenge(int userId, int challengeId);
 
     //list history of completed tasks
     List<CompleteChallenge> getUserHistory(int userId);
 
-    //Get CompletedChallenge By id
+    //Get Completed Challenge Details By Completed_Challenge_id
     CompleteChallenge getCompletedChallengeById(int completedChallengeId);
 
-    //count number of tasks completed per specific difficulty
+    //Get Challenge Details by Challenge_id
+    Challenge getChallengeById(int challengeId);
 
-
-    //count number of tasks completed per challenge id
 
 
 }

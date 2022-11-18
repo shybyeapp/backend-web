@@ -6,15 +6,15 @@ public class Challenge {
     private String challengeName;
     private String challengeDescription;
     private int challengePoints;
-    private String text;
+    private String difficulty;
     private int rewardId;
 
-    public Challenge(int challengeId, String challengeName, String challengeDescription, int challengePoints, String text, int rewardId) {
+    public Challenge(int challengeId, String challengeName, String challengeDescription, int challengePoints, String difficulty, int rewardId) {
         this.challengeId = challengeId;
         this.challengeName = challengeName;
         this.challengeDescription = challengeDescription;
         this.challengePoints = challengePoints;
-        this.text = text;
+        this.difficulty = difficulty;
         this.rewardId = rewardId;
     }
 
@@ -53,12 +53,12 @@ public class Challenge {
         this.challengePoints = challengePoints;
     }
 
-    public String getText() {
-        return text;
+    public String getDifficulty() {
+        return difficulty;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public int getRewardId() {
@@ -76,7 +76,7 @@ public class Challenge {
                 ", challengeName='" + challengeName + '\'' +
                 ", challengeDescription='" + challengeDescription + '\'' +
                 ", challengePoints=" + challengePoints +
-                ", text='" + text + '\'' +
+                ", text='" + difficulty + '\'' +
                 ", rewardId=" + rewardId +
                 '}';
     }

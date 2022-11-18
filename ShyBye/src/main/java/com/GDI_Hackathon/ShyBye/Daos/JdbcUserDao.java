@@ -1,7 +1,9 @@
 package com.GDI_Hackathon.ShyBye.Daos;
 
+import com.GDI_Hackathon.ShyBye.Exceptions.InvalidUsernamePasswordException;
 import com.GDI_Hackathon.ShyBye.Exceptions.UserIdNotFoundException;
 import com.GDI_Hackathon.ShyBye.Exceptions.UsernameNotFoundException;
+import com.GDI_Hackathon.ShyBye.Models.LoginDTO;
 import com.GDI_Hackathon.ShyBye.Models.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +18,22 @@ public class JdbcUserDao implements UserDao {
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcUserDao(JdbcTemplate jdbcTemplate){ this.jdbcTemplate = jdbcTemplate;}
+
+
+    @Override
+    public User login(LoginDTO login) {
+        String sql = "SELECT user_id, username, user_points, passwrd " +
+                     "FROM users " +
+                     "WHERE username = ? AND passwrd = ?; ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, login.getUsername(), login.getPassword());
+
+        if(results.next()) {
+            return mapRowToUser(results);
+        }
+
+        throw new InvalidUsernamePasswordException();
+    }
 
     @Override
     public List<User> findAll() {
@@ -50,7 +68,7 @@ public class JdbcUserDao implements UserDao {
     public User findByUsername(String username) {
         String sql = "SELECT user_id, username, user_points " +
                      "FROM users " +
-                     "WHERE username = '?'; ";
+                     "WHERE username = ?; ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
 
@@ -59,14 +77,6 @@ public class JdbcUserDao implements UserDao {
         }
 
         throw new UsernameNotFoundException();
-
-//        if (username == null) throw new IllegalArgumentException("Username cannot be null");
-
-//        for (User user : this.findAll()) {
-//            if (user.getUsername().equalsIgnoreCase(username)) {
-//                return user;
-//            }
-//        }
     }
 
     @Override
@@ -89,6 +99,17 @@ public class JdbcUserDao implements UserDao {
     @Override
     public int getPointsByUserId(int userId) {
         return 0;
+    }
+
+    @Override
+    public User updateUserScore(User updatedUser) {
+        String sql = "UPDATE users " +
+                     "SET user_points = ? " +
+                     "WHERE user_id = ?; ";
+
+        jdbcTemplate.update(sql, updatedUser.getUserPoints(), updatedUser.getUserId());
+
+        return getUserById(updatedUser.getUserId());
     }
 
     private User mapRowToUser(SqlRowSet rs){

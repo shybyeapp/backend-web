@@ -1,9 +1,12 @@
 package com.GDI_Hackathon.ShyBye.Daos;
+import com.GDI_Hackathon.ShyBye.Models.LoginDTO;
 import com.GDI_Hackathon.ShyBye.Models.User;
 import java.util.List;
 
 public interface UserDao {
 
+
+    User login(LoginDTO login);
 
     List<User> findAll();
 
@@ -16,5 +19,7 @@ public interface UserDao {
      void createUser(User user);
 
     int getPointsByUserId(int userId);
+
+    User updateUserScore(User updatedUser);
 
 }
