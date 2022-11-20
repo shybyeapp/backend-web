@@ -17,6 +17,9 @@ public interface ChallengeDao {
     //Get Challenge Details by Challenge_id
     Challenge getChallengeById(int challengeId);
 
+    //Get List of all challenges
+    List<Challenge> getListOfChallenges();
+
 
 
 }

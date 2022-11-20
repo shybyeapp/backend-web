@@ -16,7 +16,7 @@ public interface UserDao {
 
     int findIdByUsername(String username);
 
-     void createUser(User user);
+    void createUser(User user);
 
     int getPointsByUserId(int userId);
 

@@ -7,6 +7,7 @@ public class CompleteChallenge {
     private int id;
     private int userId;
     private int challengeId;
+    private String journalEntry;
 //    private LocalDateTime dateCompleted;
 
 //    public CompleteChallenge(int id, int userId, int challengeId, LocalDateTime dateCompleted) {

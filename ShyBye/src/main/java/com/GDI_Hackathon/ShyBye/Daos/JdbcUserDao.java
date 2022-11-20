@@ -23,8 +23,8 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User login(LoginDTO login) {
         String sql = "SELECT user_id, username, user_points, passwrd " +
-                     "FROM users " +
-                     "WHERE username = ? AND passwrd = ?; ";
+                "FROM users " +
+                "WHERE username = ? AND passwrd = ?; ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, login.getUsername(), login.getPassword());
 
@@ -52,8 +52,8 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         String sql = "SELECT user_id, username, user_points " +
-                     "FROM users " +
-                     "WHERE user_id = ?; ";
+                "FROM users " +
+                "WHERE user_id = ?; ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
@@ -67,8 +67,8 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User findByUsername(String username) {
         String sql = "SELECT user_id, username, user_points " +
-                     "FROM users " +
-                     "WHERE username = ?; ";
+                "FROM users " +
+                "WHERE username = ?; ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
 
@@ -87,7 +87,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public void createUser(User newUser){
         String sql = "INSERT INTO users (username, passwrd, user_points) " +
-                     "VALUES (?,?,?) RETURNING user_id; ";
+                "VALUES (?,?,?) RETURNING user_id; ";
         try {
             jdbcTemplate.queryForObject(sql, Integer.class ,newUser.getUsername(),newUser.getPassword(),newUser.getUserPoints());
         } catch (DataAccessException e) {
@@ -104,8 +104,8 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User updateUserScore(User updatedUser) {
         String sql = "UPDATE users " +
-                     "SET user_points = ? " +
-                     "WHERE user_id = ?; ";
+                "SET user_points = ? " +
+                "WHERE user_id = ?; ";
 
         jdbcTemplate.update(sql, updatedUser.getUserPoints(), updatedUser.getUserId());
 
