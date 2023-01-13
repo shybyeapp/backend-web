@@ -1,20 +1,34 @@
-# shybye-backend
+<div align="center">
+  🙈
+  <h1>ShyBye</h1>
+</div>
 
-see frontend here https://github.com/gabw13/shybye-frontend
+**Our mission** is to help individuals overcome social anxiety and loneliness by
+gamifying primarily in-person social interactions through a variety of fun
+social challenges
 
-## Usage
+ShyBye was initially created over the span of *four days* during the 2022
+"[GDI Virtual Hackathon](https://girldevelopit.com/virtual-hackathon/): Hack for
+Health!" and won the "On Our Phone Tomorrow!" award
 
-**macOS**
+Made with &hearts; by all [our awesome contributors](https://shybye.netlify.app/about)!
+<!-- TODO: add a contributor section -->
 
-1. Install and setup PostgreSQL with homebrew
-    1. `brew install postgresql`
-    1. `/usr/local/opt/postgres@<version>/bin/createuser -s postgres`
-    1. `brew services start postgresql@<version>`
-    1. `createdb shybyedb`
-    1. `psql shybyedb < ./shy_bye.sql`
-1. Install and setup Java 11
-    1. `brew install java11`
-    1. `sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk`
-1. `brew install maven`
-1. `mvn clean install`
-1. `java -jar ./target/*.jar`
+## Under the Hood
+This is the frontend source code for the ShyBye app
+- [**Frontend**](https://github.com/shybyeapp/frontend-web)
+[Next.js](https://nextjs.org) + [MUI](https://mui.com/core/)
+- [**Backend**](https://github.com/shybyeapp/backend-web)
+[Spring](https://spring.io/) + [PostgreSQL](https://www.postgresql.org/)
+
+### Running Locally
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
+2. Build the images and start the composed container
+```shell
+# (Optional) ignore cache and rebuild images
+docker compose build --no-cache
+
+# Give the container a name of "shybyeapp"
+docker compose -p shybyeapp up
+```

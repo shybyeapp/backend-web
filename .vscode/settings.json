@@ -1,5 +1,6 @@
 {
 	"java.compile.nullAnalysis.mode": "automatic",
+  "prettier.useEditorConfig": true,
   "[java]": {
 		"editor.defaultFormatter": "redhat.java"
 	},
